@@ -374,7 +374,7 @@ class LoopReport:
                             aux[1] = aux[1].replace("g", "")
                             carbs_on_board_dict[aux[0]] = float(aux[1])
                             carbs_on_board_dict["units"] = "g"
-                        else:
+                        elif len(aux) >= 2:
                             carbs_on_board_dict[aux[0]] = aux[1]
                     loop_report_dict["carbs_on_board"] = carbs_on_board_dict
                 except Exception as e:
@@ -396,7 +396,8 @@ class LoopReport:
                             if "value" in aux[0]:
                                 last_temp_basal_dict[aux[0].lstrip()] = float(aux[1])
                             else:
-                                last_temp_basal_dict[aux[0].lstrip()] = aux[1]
+                                if len(aux) >= 2:
+                                    last_temp_basal_dict[aux[0].lstrip()] = aux[1]
                         loop_report_dict["last_temp_basal"] = last_temp_basal_dict
                 except Exception as e:
                     logger.debug("handled error loop data manager - last_temp_basal")
@@ -422,7 +423,8 @@ class LoopReport:
                                     aux[1]
                                 )
                             else:
-                                basal_delivery_state_dict[aux[0].lstrip()] = aux[1]
+                                if len(aux) >= 2:
+                                    basal_delivery_state_dict[aux[0].lstrip()] = aux[1]
                         loop_report_dict[
                             "basal_delivery_state"
                         ] = basal_delivery_state_dict
@@ -449,7 +451,7 @@ class LoopReport:
                             recommended_bolus_dict[aux[0].lstrip()] = float(aux[1])
                         elif "pendingInsulin" in aux[0]:
                             recommended_bolus_dict[aux[0].lstrip()] = float(aux[1])
-                        else:
+                        elif len(aux) >= 2:
                             recommended_bolus_dict[aux[0].lstrip()] = aux[1]
                     loop_report_dict["recommended_bolus"] = recommended_bolus_dict
                 except Exception as e:
@@ -476,7 +478,8 @@ class LoopReport:
                             elif "duration" in aux[0]:
                                 recommended_temp_basal_dict[aux[0]] = float(aux[1])
                             else:
-                                recommended_temp_basal_dict[aux[0]] = aux[1]
+                                if len(aux) >= 2:
+                                    recommended_temp_basal_dict[aux[0]] = aux[1]
                         loop_report_dict[
                             "recommended_temp_basal"
                         ] = recommended_temp_basal_dict
@@ -577,7 +580,8 @@ class LoopReport:
                     start_dict = {}
                     for v in start_list:
                         aux = v.split(": ")
-                        start_dict[aux[0].lstrip()] = aux[1]
+                        if len(aux) >= 2:
+                            start_dict[aux[0].lstrip()] = aux[1]
 
                     end = retrospective_glucose_change[split_index:]
                     end = end.replace("end: LoopKit.StoredGlucoseSample(", "").replace(
@@ -587,7 +591,8 @@ class LoopReport:
                     end_dict = {}
                     for v in end_list:
                         aux = v.split(": ")
-                        end_dict[aux[0].lstrip()] = aux[1]
+                        if len(aux) >= 2:
+                            end_dict[aux[0].lstrip()] = aux[1]
 
                     retrospective_glucose_change_dict = {}
                     retrospective_glucose_change_dict["start_dict"] = start_dict
@@ -1016,8 +1021,8 @@ class LoopReport:
                         if "scheduledBasalRate" in v:
                             if "IU/hr" in aux[1]:
                                 aux[1] = float(aux[1].replace("IU/hr", "").strip())
-
-                        record_dict[aux[0]] = aux[1]
+                        if len(aux) >= 2:
+                            record_dict[aux[0]] = aux[1]
                     record_dict["scheduledBasalRate"] = "IU/hr"
                     temp_list.append(record_dict)
 
@@ -1039,7 +1044,8 @@ class LoopReport:
 
                     for v in key_value:
                         aux = v.split(": ")
-                        record_dict[aux[0]] = aux[1]
+                        if len(aux) >= 2:
+                            record_dict[aux[0]] = aux[1]
                     temp_list.append(record_dict)
 
                 loop_report_dict["get_normalized_dose_entries"] = temp_list
@@ -1066,7 +1072,8 @@ class LoopReport:
                             record_dict[aux[0]] = float(val)
                             record_dict["scheduledBasalRateUnits"] = "IU/hr"
                         else:
-                            record_dict[aux[0]] = aux[1]
+                            if len(aux) >= 2:
+                                record_dict[aux[0]] = aux[1]
                     temp_list.append(record_dict)
 
                 loop_report_dict["cached_dose_entries"] = temp_list
@@ -1751,7 +1758,8 @@ class LoopReport:
                         if aux[0] == "quantity":
                             if isinstance(aux[1], str) and "mg/dL" in aux[1]:
                                 aux[1] = float(aux[1].replace("mg/dL", ""))
-                        record_dict[aux[0]] = aux[1]
+                        if len(aux) >= 2:
+                            record_dict[aux[0]] = aux[1]
                     record_dict["quantity_units"] = "mg/dL"
                     temp_list.append(record_dict)
 
