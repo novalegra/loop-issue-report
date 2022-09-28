@@ -369,7 +369,7 @@ class LoopReport:
                     carbs_on_board_list = carbs_on_board.split(",")
                     carbs_on_board_dict = {}
                     for v in carbs_on_board_list:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         if "quantity" in aux[0]:
                             aux[1] = aux[1].replace("g", "")
                             carbs_on_board_dict[aux[0]] = float(aux[1])
@@ -392,7 +392,7 @@ class LoopReport:
                         last_temp_basal_list = last_temp_basal.split(",")
                         last_temp_basal_dict = {}
                         for v in last_temp_basal_list:
-                            aux = v.split(": ")
+                            aux = [item.strip() for item in v.split(":")]
                             if "value" in aux[0]:
                                 last_temp_basal_dict[aux[0].lstrip()] = float(aux[1])
                             else:
@@ -416,7 +416,7 @@ class LoopReport:
                         basal_delivery_state_list = basal_delivery_state.split(",")
                         basal_delivery_state_dict = {}
                         for v in basal_delivery_state_list:
-                            aux = v.split(": ")
+                            aux = [item.strip() for item in v.split(":")]
                             if "value" in aux[0]:
                                 basal_delivery_state_dict[aux[0].lstrip()] = float(
                                     aux[1]
@@ -444,7 +444,7 @@ class LoopReport:
                     recommended_bolus_list = recommended_bolus.split(",")
                     recommended_bolus_dict = {}
                     for v in recommended_bolus_list:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         if "amount" in aux[0]:
                             recommended_bolus_dict[aux[0].lstrip()] = float(aux[1])
                         elif "pendingInsulin" in aux[0]:
@@ -470,7 +470,7 @@ class LoopReport:
                         recommended_temp_basal_list = recommended_temp_basal.split(",")
                         recommended_temp_basal_dict = {}
                         for v in recommended_temp_basal_list:
-                            aux = v.split(": ")
+                            aux = [item.strip() for item in v.split(":")]
                             if "unitsPerHour" in aux[0]:
                                 recommended_temp_basal_dict[aux[0]] = float(aux[1])
                             elif "duration" in aux[0]:
@@ -576,7 +576,7 @@ class LoopReport:
                     start_list.pop(len(start_list) - 1)
                     start_dict = {}
                     for v in start_list:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         start_dict[aux[0].lstrip()] = aux[1]
 
                     end = retrospective_glucose_change[split_index:]
@@ -586,7 +586,7 @@ class LoopReport:
                     end_list = end.split(",")
                     end_dict = {}
                     for v in end_list:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         end_dict[aux[0].lstrip()] = aux[1]
 
                     retrospective_glucose_change_dict = {}
@@ -1012,7 +1012,7 @@ class LoopReport:
                     key_value = item.split(", ")
 
                     for v in key_value:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         if "scheduledBasalRate" in v:
                             if "IU/hr" in aux[1]:
                                 aux[1] = float(aux[1].replace("IU/hr", "").strip())
@@ -1038,7 +1038,7 @@ class LoopReport:
                     key_value = item.split(", ")
 
                     for v in key_value:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         record_dict[aux[0]] = aux[1]
                     temp_list.append(record_dict)
 
@@ -1060,7 +1060,7 @@ class LoopReport:
                     key_value = item.split(", ")
 
                     for v in key_value:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         if "scheduledBasalRate" in aux[0] and aux[1] != "nil":
                             val = aux[1].replace("IU/hr", "")
                             record_dict[aux[0]] = float(val)
@@ -1747,7 +1747,7 @@ class LoopReport:
                     key_value = item.split(", ")
 
                     for v in key_value:
-                        aux = v.split(": ")
+                        aux = [item.strip() for item in v.split(":")]
                         if aux[0] == "quantity":
                             if isinstance(aux[1], str) and "mg/dL" in aux[1]:
                                 aux[1] = float(aux[1].replace("mg/dL", ""))
