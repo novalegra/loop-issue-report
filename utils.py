@@ -1,6 +1,10 @@
 from loop.issue_report import parser
 import json
+import os
+
+
 from datetime import datetime
+from pathlib import Path
 
 
 def issue_report_date_parser(date_string):
@@ -24,110 +28,24 @@ def parse_report(path, file_name):
     return parsed_issue_report_dict
 
 
-def create_insulin_effect_fixture(report_dict):
-    try:
-        insulin_effects = report_dict["insulin_effect"]
-    except:
-        raise RuntimeError("Unable find key 'insulin_effect'")
+def find_full_path(resource_name, extension):
+    """ Find file path, given name and extension
+        example: "/home/pi/Media/tidepool_demo.json"
 
-    output = []
+        This will return the *first* instance of the file
 
-    for effect in insulin_effects:
-        parsed_effect = {}
-        parsed_effect["date"] = issue_report_date_parser(effect["start_time"])
-        parsed_effect["amount"] = effect["value"]
-        parsed_effect["unit"] = effect["units"]
-        output.append(parsed_effect)
+    Arguments:
+    resource_name -- name of file without the extension
+    extension -- ending of file (ex: ".json")
 
-    return output
+    Output:
+    path to file
+    """
+    search_dir = Path(__file__).parent.parent
+    for root, dirs, files in os.walk(search_dir):
+        for name in files:
+            (base, ext) = os.path.splitext(name)
+            if base == resource_name and extension == ext:
+                return root
 
-
-def create_carb_effect_fixture(report_dict):
-    try:
-        carb_effects = report_dict["carb_effect"]
-    except:
-        raise RuntimeError("Unable find key 'carb_effect'")
-
-    output = []
-
-    for effect in carb_effects:
-        parsed_effect = {}
-        parsed_effect["date"] = issue_report_date_parser(effect["start_time"])
-        parsed_effect["unit"] = effect["units"]
-        parsed_effect["amount"] = effect["value"]
-        output.append(parsed_effect)
-
-    return output
-
-
-def create_momentum_effect_fixture(report_dict):
-    try:
-        momentum_effects = report_dict["glucose_momentum_effect"]
-    except:
-        raise RuntimeError("Unable find key 'glucose_momentum_effect'")
-
-    output = []
-
-    for effect in momentum_effects:
-        parsed_effect = {}
-        parsed_effect["date"] = issue_report_date_parser(effect["startDate"])
-        parsed_effect["unit"] = effect["quantity_units"]
-        parsed_effect["amount"] = effect["quantity"]
-        output.append(parsed_effect)
-
-    return output
-
-
-def create_counteraction_effect_fixture(report_dict):
-    try:
-        counteraction_effects = report_dict["insulin_counteraction_effects"]
-    except:
-        raise RuntimeError("Unable find key 'insulin_counteraction_effects'")
-
-    output = []
-
-    for effect in counteraction_effects:
-        parsed_effect = {}
-        parsed_effect["startDate"] = issue_report_date_parser(effect["start_time"])
-        parsed_effect["endDate"] = issue_report_date_parser(effect["end_time"])
-        parsed_effect["unit"] = "mg\/min·dL"
-        parsed_effect["value"] = effect["value"]
-        output.append(parsed_effect)
-
-    return output
-
-
-def create_retrospective_effect_fixture(report_dict):
-    try:
-        retrospective_effects = report_dict["retrospective_glucose_effect"]
-    except:
-        raise RuntimeError("Unable find key 'retrospective_glucose_effect'")
-
-    output = []
-
-    for effect in retrospective_effects:
-        parsed_effect = {}
-        parsed_effect["date"] = issue_report_date_parser(effect["startDate"])
-        parsed_effect["unit"] = effect["quantity_units"]
-        parsed_effect["amount"] = effect["quantity"]
-        output.append(parsed_effect)
-
-    return output
-
-
-def create_predicted_glucose_fixture(report_dict):
-    try:
-        predicted_glucose = report_dict["predicted_glucose"]
-    except:
-        raise RuntimeError("Unable find key 'predicted_glucose'")
-
-    output = []
-
-    for glucose in predicted_glucose:
-        parsed = {}
-        parsed["date"] = issue_report_date_parser(glucose["start_time"])
-        parsed["unit"] = glucose["units"]
-        parsed["amount"] = glucose["value"]
-        output.append(parsed)
-
-    return output
+    raise Exception("No file found for specified resource name & extension")

@@ -3,7 +3,7 @@ import json
 import os
 
 
-def get_fixtures_from_report(path, name, prefix):
+def get_fixtures_from_report(name, report_extension):
     """ 
     Create Loop test fixtures from an issue report 
 
@@ -11,26 +11,12 @@ def get_fixtures_from_report(path, name, prefix):
     name - file name
     prefix - file prefix
     """
-    parsed_report = utils.parse_report(path, name + "." + prefix)
-    outputs = []
-    file_names = [
-        "momentum_effect",
-        "insulin_effect",
-        "counteraction_effect",
-        "carb_effect",
-        "retrospective_effect",
-        "predicted_glucose",
-    ]
+    path = utils.find_full_path(name, report_extension)
+    report_name = name + report_extension
 
-    outputs.append(utils.create_momentum_effect_fixture(parsed_report))
-    outputs.append(utils.create_insulin_effect_fixture(parsed_report))
-    outputs.append(utils.create_counteraction_effect_fixture(parsed_report))
-    outputs.append(utils.create_carb_effect_fixture(parsed_report))
-    outputs.append(utils.create_retrospective_effect_fixture(parsed_report))
-    outputs.append(utils.create_predicted_glucose_fixture(parsed_report))
+    parsed_report = utils.parse_report(path, report_name)
 
-    for i in range(len(file_names)):
-        utils.save_output(outputs[i], os.path.join(path, name + "_" + file_names[i] + ".json"))
+    utils.save_output(parsed_report, os.path.join(path, name + ".json"))
 
 
-get_fixtures_from_report("YOUR_PATH", "FILE_NAME", "FILE_EXTENSION")
+get_fixtures_from_report("meal_report1", ".md")
