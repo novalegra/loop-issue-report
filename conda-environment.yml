@@ -9,4 +9,4 @@ dependencies:
   - pip==20.0.2
   - python=3.7.3
   - pip:
-    - git+https://github.com/tidepool-org/loop-issue-report.git@rpw/initial
+    - git+https://github.com/novalegra/loop-issue-report.git@parser
