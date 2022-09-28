@@ -459,6 +459,37 @@ class LoopReport:
                     logger.debug(e)
 
                 try:
+                    recommended_auto_dose = loop_data_manager[
+                        "recommendedAutomaticDose"
+                    ]
+                    recommended_auto_dose = (
+                        recommended_auto_dose.replace(
+                            "Optional((recommendation: LoopKit.AutomaticDoseRecommendation(",
+                            "",
+                        )
+                        .replace("))", "")
+                        .replace(")", "")
+                    )
+                    recommended_auto_dose_list = recommended_auto_dose.split(",")
+                    recommended_auto_dose_dict = {}
+                    for v in recommended_bolus_list:
+                        aux = v.split(": ")
+                        if "amount" in aux[0]:
+                            recommended_auto_dose_dict[aux[0].lstrip()] = float(aux[1])
+                        elif "pendingInsulin" in aux[0]:
+                            recommended_auto_dose_dict[aux[0].lstrip()] = float(aux[1])
+                        elif len(aux) >= 2:
+                            recommended_bolus_dict[aux[0].lstrip()] = aux[1]
+                    loop_report_dict[
+                        "recommended_automatic_dose"
+                    ] = recommended_auto_dose_dict
+                except Exception as e:
+                    logger.debug(
+                        "handled error loop data manager - recommended_automatic_dose"
+                    )
+                    logger.debug(e)
+
+                try:
                     recommended_temp_basal = loop_data_manager["recommendedTempBasal"]
                     if recommended_temp_basal.strip() != "nil":
                         recommended_temp_basal = (

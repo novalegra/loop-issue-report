@@ -9,6 +9,7 @@ license: BSD-2-Clause
 """
 import os
 
+
 class Sections:
     G5_CGM_MANAGER = "g5_cgm_manager"
     DEX_CGM_MANAGER = "dex_cgm_manager"
@@ -122,7 +123,9 @@ def _parse_loop_report(path: str, file_name: str):
                 elif line.startswith("## RileyLinkDeviceManager"):
                     riley_link_device_manager = {}
                     current_section = "riley_link_device_manager"
-                    all_sections["riley_link_device_manager"] = riley_link_device_manager
+                    all_sections[
+                        "riley_link_device_manager"
+                    ] = riley_link_device_manager
                     new_line = False
 
                 elif line.startswith("## RileyLinkDevice"):
@@ -158,6 +161,9 @@ def _parse_loop_report(path: str, file_name: str):
                     _parse_key_value(all_sections, line)
 
                 elif line.startswith("recommendedBolus"):
+                    _parse_key_value(all_sections, line)
+
+                elif line.startswith("recommendedAutomaticDose"):
                     _parse_key_value(all_sections, line)
 
                 elif line.startswith("lastBolus"):
@@ -336,7 +342,9 @@ def _parse_loop_report(path: str, file_name: str):
                 elif line.startswith("## IntegralRetrospectiveCorrection"):
                     integral_retrospective_correction = {}
                     current_section = "integral_retrospective_correction"
-                    all_sections["integral_retrospective_correction"] = integral_retrospective_correction
+                    all_sections[
+                        "integral_retrospective_correction"
+                    ] = integral_retrospective_correction
                     new_line = False
 
                 elif line.startswith("## ShareClientManager"):
@@ -372,7 +380,9 @@ def _parse_loop_report(path: str, file_name: str):
                 elif line.startswith("### OmnipodPumpManagerState"):
                     omnipod_pump_manager_state = {}
                     current_section = "omnipod_pump_manager_state"
-                    all_sections["omnipod_pump_manager_state"] = omnipod_pump_manager_state
+                    all_sections[
+                        "omnipod_pump_manager_state"
+                    ] = omnipod_pump_manager_state
                     new_line = False
 
                 elif line.startswith("## PodState"):
@@ -385,7 +395,9 @@ def _parse_loop_report(path: str, file_name: str):
                     new_line = True
 
                 elif (
-                    line.startswith("#") or line.startswith("##") or line.startswith("###")
+                    line.startswith("#")
+                    or line.startswith("##")
+                    or line.startswith("###")
                 ):
                     print(f"UNHANDLED SECTION: {line}")
                     new_line = False
@@ -403,7 +415,8 @@ def _parse_loop_report(path: str, file_name: str):
                         or current_section == "insulin_effect"
                         or current_section == "carb_effect"
                         or current_section == "retrospective_glucose_discrepancies"
-                        or current_section == "retrospective_glucose_discrepancies_summed"
+                        or current_section
+                        == "retrospective_glucose_discrepancies_summed"
                         or current_section == "cached_glucose_samples"
                         or current_section == "cached_carb_entries"
                     ):
@@ -419,13 +432,15 @@ def _parse_loop_report(path: str, file_name: str):
                         i_list.append(line)
 
                     elif (
-                            not line.startswith("settings")
-                            and current_section == Sections.LOOP_DATA_MANAGER
+                        not line.startswith("settings")
+                        and current_section == Sections.LOOP_DATA_MANAGER
                     ):
                         one = "one"
-                    elif(line.startswith("* basalProfileApplyingOverrideHistory")):
+                    elif line.startswith("* basalProfileApplyingOverrideHistory"):
                         dict = all_sections[current_section]
-                        dict["basalProfileApplyingOverrideHistory"] = line.replace("* basalProfileApplyingOverrideHistory", "")
+                        dict["basalProfileApplyingOverrideHistory"] = line.replace(
+                            "* basalProfileApplyingOverrideHistory", ""
+                        )
 
                     elif current_section:
                         new_line = False
@@ -444,9 +459,6 @@ def _parse_loop_report(path: str, file_name: str):
         print(e)
 
     return all_sections
-
-
-
 
 
 def _parse_key_value(all_sections, line):
