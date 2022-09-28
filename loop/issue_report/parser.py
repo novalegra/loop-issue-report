@@ -151,7 +151,6 @@ class LoopReport:
             try:
                 dose_store = dict[Sections.DOSE_STORE]
 
-
                 basal_profile = json.loads(
                     dose_store["basalProfile"]
                     .replace("[", "{")
@@ -175,33 +174,39 @@ class LoopReport:
                     ).group(1)
                 )
 
-
                 substr = dose_store["basalProfileApplyingOverrideHistory"]
-                value = "timeZone";
+                value = "timeZone"
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
-                value_temp = value_temp.replace('"', '')
+                value_temp = value_temp.replace('"', "")
                 last_index = 0
                 if value_temp.find(",") == -1:
                     last_index = value_temp.index("]")
                 else:
                     last_index = value_temp.find(",")
-                loop_report_dict["basalProfileApplyingOverrideHistory_timeZone"] = value_temp[len(
-                    value) + 1:last_index]
+                loop_report_dict[
+                    "basalProfileApplyingOverrideHistory_timeZone"
+                ] = value_temp[len(value) + 1 : last_index]
 
-
-
-                value = "items";
+                value = "items"
                 substr = dose_store["basalProfileApplyingOverrideHistory"]
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
                 last_index = value_temp.index("]]")
-                items_val = '{"items": [' + value_temp[len(value) + 2:last_index + 2].replace(" ", "") \
-                    .replace("(", "{").replace("]", "}").replace("[", "{").replace("{{", "{").replace("}}", "}") + ']}'
-                loop_report_dict["basalProfileApplyingOverrideHistory_items"] = json.loads(items_val)[
-                    "items"]
-
-
+                items_val = (
+                    '{"items": ['
+                    + value_temp[len(value) + 2 : last_index + 2]
+                    .replace(" ", "")
+                    .replace("(", "{")
+                    .replace("]", "}")
+                    .replace("[", "{")
+                    .replace("{{", "{")
+                    .replace("}}", "}")
+                    + "]}"
+                )
+                loop_report_dict[
+                    "basalProfileApplyingOverrideHistory_items"
+                ] = json.loads(items_val)["items"]
 
             except:
                 logger.debug("handled error dose store")
@@ -222,73 +227,98 @@ class LoopReport:
                 carb_store = dict[Sections.CARB_STORE]
                 ###insulinSensitivityScheduleApplyingOverrideHistory###
                 substr = carb_store["insulinSensitivityScheduleApplyingOverrideHistory"]
-                value = "timeZone";
+                value = "timeZone"
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
-                value_temp = value_temp.replace('"', '')
+                value_temp = value_temp.replace('"', "")
                 last_index = 0
                 if value_temp.find(",") == -1:
                     last_index = value_temp.index("]")
                 else:
                     last_index = value_temp.find(",")
 
-                loop_report_dict["insulinSensitivityScheduleApplyingOverrideHistory_timeZone"] = value_temp[len(value) + 1:last_index]
+                loop_report_dict[
+                    "insulinSensitivityScheduleApplyingOverrideHistory_timeZone"
+                ] = value_temp[len(value) + 1 : last_index]
 
-                value = "unit";
+                value = "unit"
                 substr = carb_store["insulinSensitivityScheduleApplyingOverrideHistory"]
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
-                value_temp = value_temp.replace('"', '')
+                value_temp = value_temp.replace('"', "")
                 last_index = value_temp.index("]")
                 if last_index > 12:
                     last_index = value_temp.index(",")
-                loop_report_dict["insulinSensitivityScheduleApplyingOverrideHistory_units"] = value_temp[len(value) + 1:last_index]
+                loop_report_dict[
+                    "insulinSensitivityScheduleApplyingOverrideHistory_units"
+                ] = value_temp[len(value) + 1 : last_index]
 
-                value = "items";
+                value = "items"
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
                 last_index = value_temp.index("]]")
-                items_val = '{"items": [' + value_temp[len(value) + 2:last_index+2].replace(" ", "")\
-                    .replace("(", "{").replace("]", "}").replace("[", "{").replace("{{", "{").replace("}}", "}") + ']}'
-                loop_report_dict["insulinSensitivityScheduleApplyingOverrideHistory_items"] =json.loads(items_val)["items"]
-
+                items_val = (
+                    '{"items": ['
+                    + value_temp[len(value) + 2 : last_index + 2]
+                    .replace(" ", "")
+                    .replace("(", "{")
+                    .replace("]", "}")
+                    .replace("[", "{")
+                    .replace("{{", "{")
+                    .replace("}}", "}")
+                    + "]}"
+                )
+                loop_report_dict[
+                    "insulinSensitivityScheduleApplyingOverrideHistory_items"
+                ] = json.loads(items_val)["items"]
 
                 ####carbRatioScheduleApplyingOverrideHistory###
                 substr = carb_store["carbRatioScheduleApplyingOverrideHistory"]
-                value = "timeZone";
+                value = "timeZone"
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
-                value_temp = value_temp.replace('"', '')
+                value_temp = value_temp.replace('"', "")
                 last_index = 0
                 if value_temp.find(",") == -1:
                     last_index = value_temp.index("]")
                 else:
                     last_index = value_temp.find(",")
 
-                loop_report_dict["carbRatioScheduleApplyingOverrideHistory_timeZone"] = value_temp[len(
-                    value) + 1:last_index]
+                loop_report_dict[
+                    "carbRatioScheduleApplyingOverrideHistory_timeZone"
+                ] = value_temp[len(value) + 1 : last_index]
 
-                value = "unit";
+                value = "unit"
                 substr = carb_store["carbRatioScheduleApplyingOverrideHistory"]
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
-                value_temp = value_temp.replace('"', '')
+                value_temp = value_temp.replace('"', "")
                 last_index = value_temp.index("]")
                 if last_index > 12:
                     last_index = value_temp.index(",")
-                loop_report_dict["carbRatioScheduleApplyingOverrideHistory_units"] = value_temp[len(value) + 1:last_index]
+                loop_report_dict[
+                    "carbRatioScheduleApplyingOverrideHistory_units"
+                ] = value_temp[len(value) + 1 : last_index]
 
-                value = "items";
+                value = "items"
                 substr = carb_store["carbRatioScheduleApplyingOverrideHistory"]
                 start_index = substr.index(value)
                 value_temp = substr[start_index:]
                 last_index = value_temp.index("]]")
-                items_val = '{"items": [' + value_temp[len(value) + 2:last_index + 2].replace(" ", "") \
-                    .replace("(", "{").replace("]", "}").replace("[", "{").replace("{{", "{").replace("}}", "}") + ']}'
-                loop_report_dict["carbRatioScheduleApplyingOverrideHistory_items"] = json.loads(items_val)[
-                    "items"]
-
-
+                items_val = (
+                    '{"items": ['
+                    + value_temp[len(value) + 2 : last_index + 2]
+                    .replace(" ", "")
+                    .replace("(", "{")
+                    .replace("]", "}")
+                    .replace("[", "{")
+                    .replace("{{", "{")
+                    .replace("}}", "}")
+                    + "]}"
+                )
+                loop_report_dict[
+                    "carbRatioScheduleApplyingOverrideHistory_items"
+                ] = json.loads(items_val)["items"]
 
             except Exception as error:
 
@@ -330,16 +360,20 @@ class LoopReport:
                 loop_data_manager = dict[Sections.LOOP_DATA_MANAGER]
 
                 try:
-                    carbs_on_board = loop_data_manager['carbsOnBoard']
-                    carbs_on_board = carbs_on_board.replace('Optional(LoopKit.CarbValue(', '').replace('))', '').replace(')', '')
+                    carbs_on_board = loop_data_manager["carbsOnBoard"]
+                    carbs_on_board = (
+                        carbs_on_board.replace("Optional(LoopKit.CarbValue(", "")
+                        .replace("))", "")
+                        .replace(")", "")
+                    )
                     carbs_on_board_list = carbs_on_board.split(",")
                     carbs_on_board_dict = {}
                     for v in carbs_on_board_list:
                         aux = v.split(": ")
-                        if 'quantity' in aux[0]:
-                            aux[1] = aux[1].replace('g', '')
+                        if "quantity" in aux[0]:
+                            aux[1] = aux[1].replace("g", "")
                             carbs_on_board_dict[aux[0]] = float(aux[1])
-                            carbs_on_board_dict["units"] = 'g'
+                            carbs_on_board_dict["units"] = "g"
                         else:
                             carbs_on_board_dict[aux[0]] = aux[1]
                     loop_report_dict["carbs_on_board"] = carbs_on_board_dict
@@ -348,14 +382,18 @@ class LoopReport:
                     logger.debug(e)
 
                 try:
-                    last_temp_basal = loop_data_manager['lastTempBasal']
-                    if last_temp_basal != 'nil':
-                        last_temp_basal = last_temp_basal.replace('Optional(LoopKit.DoseEntry(','').replace('))', '').replace(')', '')
+                    last_temp_basal = loop_data_manager["lastTempBasal"]
+                    if last_temp_basal != "nil":
+                        last_temp_basal = (
+                            last_temp_basal.replace("Optional(LoopKit.DoseEntry(", "")
+                            .replace("))", "")
+                            .replace(")", "")
+                        )
                         last_temp_basal_list = last_temp_basal.split(",")
                         last_temp_basal_dict = {}
                         for v in last_temp_basal_list:
                             aux = v.split(": ")
-                            if 'value' in aux[0]:
+                            if "value" in aux[0]:
                                 last_temp_basal_dict[aux[0].lstrip()] = float(aux[1])
                             else:
                                 last_temp_basal_dict[aux[0].lstrip()] = aux[1]
@@ -365,34 +403,51 @@ class LoopReport:
                     logger.debug(e)
 
                 try:
-                    basal_delivery_state = loop_data_manager['basalDeliveryState']
-                    if basal_delivery_state != 'nil':
-                        basal_delivery_state = basal_delivery_state.replace('Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(', '').replace('))',
-                                                                                                             '').replace(
-                            ')', '')
+                    basal_delivery_state = loop_data_manager["basalDeliveryState"]
+                    if basal_delivery_state != "nil":
+                        basal_delivery_state = (
+                            basal_delivery_state.replace(
+                                "Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(",
+                                "",
+                            )
+                            .replace("))", "")
+                            .replace(")", "")
+                        )
                         basal_delivery_state_list = basal_delivery_state.split(",")
                         basal_delivery_state_dict = {}
                         for v in basal_delivery_state_list:
                             aux = v.split(": ")
-                            if 'value' in aux[0]:
-                                basal_delivery_state_dict[aux[0].lstrip()] = float(aux[1])
+                            if "value" in aux[0]:
+                                basal_delivery_state_dict[aux[0].lstrip()] = float(
+                                    aux[1]
+                                )
                             else:
                                 basal_delivery_state_dict[aux[0].lstrip()] = aux[1]
-                        loop_report_dict["basal_delivery_state"] = basal_delivery_state_dict
+                        loop_report_dict[
+                            "basal_delivery_state"
+                        ] = basal_delivery_state_dict
                 except Exception as e:
-                    logger.debug("handled error loop data manager - basal_delivery_state")
+                    logger.debug(
+                        "handled error loop data manager - basal_delivery_state"
+                    )
                     logger.debug(e)
 
                 try:
-                    recommended_bolus = loop_data_manager['recommendedBolus']
-                    recommended_bolus = recommended_bolus.replace('Optional((recommendation: Loop.BolusRecommendation(', '').replace('))', '').replace(')', '')
+                    recommended_bolus = loop_data_manager["recommendedBolus"]
+                    recommended_bolus = (
+                        recommended_bolus.replace(
+                            "Optional((recommendation: Loop.BolusRecommendation(", ""
+                        )
+                        .replace("))", "")
+                        .replace(")", "")
+                    )
                     recommended_bolus_list = recommended_bolus.split(",")
                     recommended_bolus_dict = {}
                     for v in recommended_bolus_list:
                         aux = v.split(": ")
-                        if 'amount' in aux[0]:
+                        if "amount" in aux[0]:
                             recommended_bolus_dict[aux[0].lstrip()] = float(aux[1])
-                        elif 'pendingInsulin' in aux[0]:
+                        elif "pendingInsulin" in aux[0]:
                             recommended_bolus_dict[aux[0].lstrip()] = float(aux[1])
                         else:
                             recommended_bolus_dict[aux[0].lstrip()] = aux[1]
@@ -402,28 +457,44 @@ class LoopReport:
                     logger.debug(e)
 
                 try:
-                    recommended_temp_basal = loop_data_manager['recommendedTempBasal']
-                    if recommended_temp_basal.strip() != 'nil':
-                        recommended_temp_basal = recommended_temp_basal.replace('Optional((recommendation: Loop.TempBasalRecommendation(', '').replace('))', '').replace(')', '')
+                    recommended_temp_basal = loop_data_manager["recommendedTempBasal"]
+                    if recommended_temp_basal.strip() != "nil":
+                        recommended_temp_basal = (
+                            recommended_temp_basal.replace(
+                                "Optional((recommendation: Loop.TempBasalRecommendation(",
+                                "",
+                            )
+                            .replace("))", "")
+                            .replace(")", "")
+                        )
                         recommended_temp_basal_list = recommended_temp_basal.split(",")
                         recommended_temp_basal_dict = {}
                         for v in recommended_temp_basal_list:
                             aux = v.split(": ")
-                            if 'unitsPerHour' in aux[0]:
+                            if "unitsPerHour" in aux[0]:
                                 recommended_temp_basal_dict[aux[0]] = float(aux[1])
-                            elif 'duration' in aux[0]:
+                            elif "duration" in aux[0]:
                                 recommended_temp_basal_dict[aux[0]] = float(aux[1])
                             else:
                                 recommended_temp_basal_dict[aux[0]] = aux[1]
-                        loop_report_dict["recommended_temp_basal"] = recommended_temp_basal_dict
+                        loop_report_dict[
+                            "recommended_temp_basal"
+                        ] = recommended_temp_basal_dict
                 except Exception as e:
-                    logger.debug("handled error loop data manager - recommended_temp_basal")
+                    logger.debug(
+                        "handled error loop data manager - recommended_temp_basal"
+                    )
                     logger.debug(e)
 
                 try:
-                    retrospective_glucose_effect = loop_data_manager['retrospectiveGlucoseEffect']
-                    retrospective_glucose_effect = retrospective_glucose_effect.replace("[", "").replace("]", "").replace(
-                        "LoopKit.GlucoseEffect(", "")
+                    retrospective_glucose_effect = loop_data_manager[
+                        "retrospectiveGlucoseEffect"
+                    ]
+                    retrospective_glucose_effect = (
+                        retrospective_glucose_effect.replace("[", "")
+                        .replace("]", "")
+                        .replace("LoopKit.GlucoseEffect(", "")
+                    )
                     values = retrospective_glucose_effect.split(")")
                     values.pop(len(values) - 1)
                     retrospective_glucose_effect_list = []
@@ -432,22 +503,34 @@ class LoopReport:
                         dictionary = {}
 
                         for item in items:
-                            if 'startDate' in item:
+                            if "startDate" in item:
                                 item = item.replace("startDate:", "").strip()
-                                dictionary['startDate'] = item
+                                dictionary["startDate"] = item
                             elif "quantity" in item:
-                                item = float(item.replace("quantity:", "").replace("mg/dL", "").strip())
-                                dictionary['quantity'] = item
-                                dictionary['quantity_units'] = "mg/dL"
+                                item = float(
+                                    item.replace("quantity:", "")
+                                    .replace("mg/dL", "")
+                                    .strip()
+                                )
+                                dictionary["quantity"] = item
+                                dictionary["quantity_units"] = "mg/dL"
                         retrospective_glucose_effect_list.append(dictionary)
-                    loop_report_dict["retrospective_glucose_effect"] = retrospective_glucose_effect_list
+                    loop_report_dict[
+                        "retrospective_glucose_effect"
+                    ] = retrospective_glucose_effect_list
                 except Exception as e:
-                    logger.debug("handled error loop data manager - retrospective_glucose_effect")
+                    logger.debug(
+                        "handled error loop data manager - retrospective_glucose_effect"
+                    )
                     logger.debug(e)
 
                 try:
-                    glucose_momentum_effect = loop_data_manager['glucoseMomentumEffect']
-                    glucose_momentum_effect = glucose_momentum_effect.replace("[", "").replace("]", "").replace("LoopKit.GlucoseEffect(", "")
+                    glucose_momentum_effect = loop_data_manager["glucoseMomentumEffect"]
+                    glucose_momentum_effect = (
+                        glucose_momentum_effect.replace("[", "")
+                        .replace("]", "")
+                        .replace("LoopKit.GlucoseEffect(", "")
+                    )
                     values = glucose_momentum_effect.split(")")
                     values.pop(len(values) - 1)
                     glucose_momentum_effect_list = []
@@ -456,25 +539,39 @@ class LoopReport:
                         dictionary = {}
 
                         for item in items:
-                            if 'startDate' in item:
+                            if "startDate" in item:
                                 item = item.replace("startDate:", "").strip()
-                                dictionary['startDate'] = item
+                                dictionary["startDate"] = item
                             elif "quantity" in item:
-                                item = float(item.replace("quantity:", "").replace("mg/dL", "").strip())
-                                dictionary['quantity'] = item
-                                dictionary['quantity_units'] = "mg/dL"
+                                item = float(
+                                    item.replace("quantity:", "")
+                                    .replace("mg/dL", "")
+                                    .strip()
+                                )
+                                dictionary["quantity"] = item
+                                dictionary["quantity_units"] = "mg/dL"
                         glucose_momentum_effect_list.append(dictionary)
-                    loop_report_dict["glucose_momentum_effect"] = glucose_momentum_effect_list
+                    loop_report_dict[
+                        "glucose_momentum_effect"
+                    ] = glucose_momentum_effect_list
                 except Exception as e:
-                    logger.debug("handled error loop data manager - glucose_momentum_effect")
+                    logger.debug(
+                        "handled error loop data manager - glucose_momentum_effect"
+                    )
                     logger.debug(e)
 
                 try:
-                    retrospective_glucose_change = loop_data_manager['retrospectiveGlucoseChange']
-                    retrospective_glucose_change = retrospective_glucose_change.replace("Optional((", "").replace("))", "")
-                    split_index = retrospective_glucose_change.index('end')
+                    retrospective_glucose_change = loop_data_manager[
+                        "retrospectiveGlucoseChange"
+                    ]
+                    retrospective_glucose_change = retrospective_glucose_change.replace(
+                        "Optional((", ""
+                    ).replace("))", "")
+                    split_index = retrospective_glucose_change.index("end")
                     start = retrospective_glucose_change[:split_index]
-                    start = start.replace("start: LoopKit.StoredGlucoseSample(", "").replace(")", "")
+                    start = start.replace(
+                        "start: LoopKit.StoredGlucoseSample(", ""
+                    ).replace(")", "")
                     start_list = start.split(",")
                     start_list.pop(len(start_list) - 1)
                     start_dict = {}
@@ -483,24 +580,36 @@ class LoopReport:
                         start_dict[aux[0].lstrip()] = aux[1]
 
                     end = retrospective_glucose_change[split_index:]
-                    end = end.replace("end: LoopKit.StoredGlucoseSample(", "").replace(")", "")
-                    end_list= end.split(",")
+                    end = end.replace("end: LoopKit.StoredGlucoseSample(", "").replace(
+                        ")", ""
+                    )
+                    end_list = end.split(",")
                     end_dict = {}
                     for v in end_list:
                         aux = v.split(": ")
                         end_dict[aux[0].lstrip()] = aux[1]
 
                     retrospective_glucose_change_dict = {}
-                    retrospective_glucose_change_dict['start_dict'] = start_dict
-                    retrospective_glucose_change_dict['end_dict'] = end_dict
-                    loop_report_dict["retrospective_glucose_change"] = retrospective_glucose_change_dict
+                    retrospective_glucose_change_dict["start_dict"] = start_dict
+                    retrospective_glucose_change_dict["end_dict"] = end_dict
+                    loop_report_dict[
+                        "retrospective_glucose_change"
+                    ] = retrospective_glucose_change_dict
                 except Exception as e:
-                    logger.debug("handled error loop data manager - retrospective_glucose_change")
+                    logger.debug(
+                        "handled error loop data manager - retrospective_glucose_change"
+                    )
                     logger.debug(e)
 
                 try:
-                    retrospective_predicted_glucose = loop_data_manager['retrospectivePredictedGlucose']
-                    retrospective_predicted_glucose = retrospective_predicted_glucose.replace("[", "").replace("]", "").replace("LoopKit.PredictedGlucoseValue(", "")
+                    retrospective_predicted_glucose = loop_data_manager[
+                        "retrospectivePredictedGlucose"
+                    ]
+                    retrospective_predicted_glucose = (
+                        retrospective_predicted_glucose.replace("[", "")
+                        .replace("]", "")
+                        .replace("LoopKit.PredictedGlucoseValue(", "")
+                    )
                     values = retrospective_predicted_glucose.split(")")
                     values.pop(len(values) - 1)
                     retrospective_predicted_glucose_list = []
@@ -509,18 +618,26 @@ class LoopReport:
                         dictionary = {}
 
                         for item in items:
-                            if 'startDate' in item:
+                            if "startDate" in item:
                                 item = item.replace("startDate:", "").strip()
-                                dictionary['startDate'] = item
+                                dictionary["startDate"] = item
                             elif "quantity" in item:
-                                item = float(item.replace("quantity:", "").replace("mg/dL", "").strip())
-                                dictionary['quantity'] = item
-                                dictionary['quantity_units'] = "mg/dL"
+                                item = float(
+                                    item.replace("quantity:", "")
+                                    .replace("mg/dL", "")
+                                    .strip()
+                                )
+                                dictionary["quantity"] = item
+                                dictionary["quantity_units"] = "mg/dL"
                         retrospective_predicted_glucose_list.append(dictionary)
 
-                    loop_report_dict["retrospective_predicted_glucose"] = retrospective_predicted_glucose_list
+                    loop_report_dict[
+                        "retrospective_predicted_glucose"
+                    ] = retrospective_predicted_glucose_list
                 except Exception as e:
-                    logger.debug("handled error loop data manager - retrospective_predicted_glucose")
+                    logger.debug(
+                        "handled error loop data manager - retrospective_predicted_glucose"
+                    )
                     logger.debug(e)
 
                 try:
@@ -546,7 +663,9 @@ class LoopReport:
                         loop_data_manager["settings"],
                     )
                     if temp:
-                        loop_report_dict["retrospective_correction_enabled"] = temp.group(1)
+                        loop_report_dict[
+                            "retrospective_correction_enabled"
+                        ] = temp.group(1)
 
                     try:
                         loop_report_dict["suspend_threshold"] = float(
@@ -554,15 +673,20 @@ class LoopReport:
                                 r"Loop.GlucoseThreshold\(value: (.+?), unit",
                                 loop_data_manager["settings"],
                             ).group(1)
-
                         )
                     except Exception as e:
-                        logger.debug("handled error LOOP_DATA_MANAGER - suspend_threshold_unit - Loop.GlucoseThreshold miss")
+                        logger.debug(
+                            "handled error LOOP_DATA_MANAGER - suspend_threshold_unit - Loop.GlucoseThreshold miss"
+                        )
                         logger.debug(e)
 
                     try:
 
-                        if  "suspend_threshold" not in loop_report_dict or loop_report_dict["suspend_threshold"] is None or loop_report_dict["suspend_threshold"] == "":
+                        if (
+                            "suspend_threshold" not in loop_report_dict
+                            or loop_report_dict["suspend_threshold"] is None
+                            or loop_report_dict["suspend_threshold"] == ""
+                        ):
                             loop_report_dict["suspend_threshold"] = float(
                                 re.search(
                                     r"LoopCore.GlucoseThreshold\(value: (.+?), unit",
@@ -570,14 +694,20 @@ class LoopReport:
                                 ).group(1)
                             )
                     except Exception as e:
-                        logger.debug("handled error LOOP_DATA_MANAGER - suspend_threshold_unit -  LoopCore.GlucoseThreshold miss")
+                        logger.debug(
+                            "handled error LOOP_DATA_MANAGER - suspend_threshold_unit -  LoopCore.GlucoseThreshold miss"
+                        )
                         logger.debug(e)
                 except Exception as e:
-                    logger.debug("handled error LOOP_DATA_MANAGER - retrospective_correction_enabled")
+                    logger.debug(
+                        "handled error LOOP_DATA_MANAGER - retrospective_correction_enabled"
+                    )
                     logger.debug(e)
 
                 try:
-                    start_index = loop_data_manager["settings"].index("suspendThreshold")
+                    start_index = loop_data_manager["settings"].index(
+                        "suspendThreshold"
+                    )
                     end_index = loop_data_manager["settings"].index(
                         "retrospectiveCorrectionEnabled"
                     )
@@ -589,29 +719,37 @@ class LoopReport:
                     while check != ")":
                         unit += 1
                         check = substr[unit]
-                    loop_report_dict["suspend_threshold_unit"] = substr[start_index:unit]
+                    loop_report_dict["suspend_threshold_unit"] = substr[
+                        start_index:unit
+                    ]
                 except Exception as e:
-                    logger.debug("handled error LOOP_DATA_MANAGER - suspend_threshold_unit")
+                    logger.debug(
+                        "handled error LOOP_DATA_MANAGER - suspend_threshold_unit"
+                    )
                     logger.debug(e)
 
                 try:
-                    glucoseTargetRangeSchedule_index = loop_data_manager["settings"].index("glucoseTargetRangeSchedule")
-                    temp_str = loop_data_manager["settings"][glucoseTargetRangeSchedule_index:]
+                    glucoseTargetRangeSchedule_index = loop_data_manager[
+                        "settings"
+                    ].index("glucoseTargetRangeSchedule")
+                    temp_str = loop_data_manager["settings"][
+                        glucoseTargetRangeSchedule_index:
+                    ]
                     items_index = temp_str.index("items")
                     temp_str = temp_str[items_index:]
-                    temp_str = temp_str.replace('items":', '')
+                    temp_str = temp_str.replace('items":', "")
                     values = []
 
                     while True:
                         if "]]" in temp_str:
                             end_index = temp_str.index("]]")
-                            parse_string = temp_str[:end_index + 2]
+                            parse_string = temp_str[: end_index + 2]
                             item = self._parse_item(parse_string)
                             if item:
                                 values.append(item)
                             else:
                                 break
-                            temp_str = temp_str[end_index+3:]
+                            temp_str = temp_str[end_index + 3 :]
                         else:
                             break
 
@@ -619,7 +757,9 @@ class LoopReport:
 
                 except Exception as e:
                     print("correction_range_schedule missing in file : " + file_name)
-                    logger.debug("handled error LOOP_DATA_MANAGER - glucose_target_range_schedule")
+                    logger.debug(
+                        "handled error LOOP_DATA_MANAGER - glucose_target_range_schedule"
+                    )
                     logger.debug(e)
 
                 try:
@@ -635,18 +775,26 @@ class LoopReport:
                     while check != "]":
                         workout += 1
                         check = substr[workout]
-                    workout_list = eval(
-                        substr[start_index : workout + 1]
-                    )
+                    workout_list = eval(substr[start_index : workout + 1])
                     if workout_list[0] < workout_list[1]:
-                        loop_report_dict["override_range_workout_minimum"] = workout_list[0]
-                        loop_report_dict["override_range_workout_maximum"] = workout_list[1]
+                        loop_report_dict[
+                            "override_range_workout_minimum"
+                        ] = workout_list[0]
+                        loop_report_dict[
+                            "override_range_workout_maximum"
+                        ] = workout_list[1]
                     else:
-                        loop_report_dict["override_range_workout_minimum"] = workout_list[1]
-                        loop_report_dict["override_range_workout_maximum"] = workout_list[0]
+                        loop_report_dict[
+                            "override_range_workout_minimum"
+                        ] = workout_list[1]
+                        loop_report_dict[
+                            "override_range_workout_maximum"
+                        ] = workout_list[0]
 
                 except Exception as e:
-                    logger.debug("handled error LOOP_DATA_MANAGER - override_range_workout")
+                    logger.debug(
+                        "handled error LOOP_DATA_MANAGER - override_range_workout"
+                    )
                     logger.debug(e)
 
                 try:
@@ -658,21 +806,25 @@ class LoopReport:
                         premeal += 1
                         check = substr[premeal]
 
-
-                    premeal_list = eval(
-                        substr[start_index : premeal + 1]
-                    )
+                    premeal_list = eval(substr[start_index : premeal + 1])
                     if premeal_list[0] < premeal_list[1]:
-                        loop_report_dict["override_range_premeal_minimum"] = premeal_list[0]
-                        loop_report_dict["override_range_premeal_maximum"] = premeal_list[1]
+                        loop_report_dict[
+                            "override_range_premeal_minimum"
+                        ] = premeal_list[0]
+                        loop_report_dict[
+                            "override_range_premeal_maximum"
+                        ] = premeal_list[1]
                     else:
-                        loop_report_dict["override_range_premeal_minimum"] = premeal_list[1]
-                        loop_report_dict["override_range_premeal_maximum"] = premeal_list[0]
+                        loop_report_dict[
+                            "override_range_premeal_minimum"
+                        ] = premeal_list[1]
+                        loop_report_dict[
+                            "override_range_premeal_maximum"
+                        ] = premeal_list[0]
 
                 except Exception as e:
                     logger.debug("preMeal is not in loop data")
                     logger.debug(e)
-
 
                 try:
                     unit = substr.index("unit")
@@ -685,14 +837,13 @@ class LoopReport:
                         end_index += 1
                         check = substr[end_index]
 
-                    override_units = substr[start_index : end_index]
+                    override_units = substr[start_index:end_index]
 
                     loop_report_dict["override_units"] = override_units
 
                 except Exception as e:
                     logger.debug("override_units is not in loop data")
                     logger.debug(e)
-
 
             except Exception as e:
                 logger.debug("handled error loop data manager")
@@ -910,10 +1061,10 @@ class LoopReport:
 
                     for v in key_value:
                         aux = v.split(": ")
-                        if 'scheduledBasalRate' in aux[0] and aux[1] != 'nil':
-                            val = aux[1].replace('IU/hr', '')
+                        if "scheduledBasalRate" in aux[0] and aux[1] != "nil":
+                            val = aux[1].replace("IU/hr", "")
                             record_dict[aux[0]] = float(val)
-                            record_dict['scheduledBasalRateUnits'] = 'IU/hr'
+                            record_dict["scheduledBasalRateUnits"] = "IU/hr"
                         else:
                             record_dict[aux[0]] = aux[1]
                     temp_list.append(record_dict)
@@ -949,9 +1100,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -960,9 +1113,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -971,9 +1126,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -982,22 +1139,24 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
-
-
 
                     value = "deliveredUnits"
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1006,9 +1165,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1017,9 +1178,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1028,9 +1191,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1039,9 +1204,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1050,9 +1217,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1061,21 +1230,25 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
 
-                    #todo: need to parse this out more
+                    # todo: need to parse this out more
                     value = "syncIdentifier"
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(")),")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1084,9 +1257,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1095,9 +1270,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1106,9 +1283,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1117,9 +1296,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1128,9 +1309,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1139,9 +1322,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1150,9 +1335,11 @@ class LoopReport:
                     try:
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1161,9 +1348,11 @@ class LoopReport:
                         value = "persistedDate"
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value) + 1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1172,9 +1361,11 @@ class LoopReport:
                         value = "date"
                         start_index = temp.index(value)
                         value_temp = temp[start_index:]
-                        value_temp = value_temp.replace('"', '')
+                        value_temp = value_temp.replace('"', "")
                         last_index = value_temp.index(",")
-                        get_pump_even_values_dict[value] = value_temp[len(value)+1:last_index]
+                        get_pump_even_values_dict[value] = value_temp[
+                            len(value) + 1 : last_index
+                        ]
                     except Exception as e:
                         logger.debug("handled error GET_PUMP_EVENT_VALUES --" + value)
                         logger.debug(e)
@@ -1291,13 +1482,13 @@ class LoopReport:
                 values_index = temp.index("values")
                 values_temp = temp[values_index:]
                 last_index = values_temp.index("]")
-                values = values_temp[:last_index+1]
+                values = values_temp[: last_index + 1]
                 values = values.replace(": [", "")
                 values = values.replace("values", "")
                 values = values.replace("]", "")
                 values = values.replace(', "', "")
                 values = values.replace('"', "")
-                values = values.replace(' ', "")
+                values = values.replace(" ", "")
                 values_list = values.split(",")
                 predicted_glucose["values"] = values_list
 
@@ -1305,9 +1496,9 @@ class LoopReport:
                     sensor_index = temp.index("sensor")
                     sensor_temp = temp[sensor_index:]
                     last_index = sensor_temp.index("]")
-                    sensor = sensor_temp[9:last_index+1]
+                    sensor = sensor_temp[9 : last_index + 1]
                     sensor = sensor.replace('"', "")
-                    sensor = sensor.replace('[', "").replace(']', "")
+                    sensor = sensor.replace("[", "").replace("]", "")
                     sensor = sensor.strip()
                     temp_list = sensor.split(",")
                     value_dict = {}
@@ -1320,13 +1511,12 @@ class LoopReport:
                     logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - sensor")
                     logger.debug(e)
 
-
                 try:
                     netBasal_index = temp.index("netBasal")
                     netBasal_temp = temp[netBasal_index:]
                     last_index = netBasal_temp.index("]")
-                    netBasal = netBasal_temp[9:last_index+1]
-                    netBasal = netBasal.replace('[', "").replace(']', "")
+                    netBasal = netBasal_temp[9 : last_index + 1]
+                    netBasal = netBasal.replace("[", "").replace("]", "")
                     netBasal = netBasal.strip()
                     temp_list = netBasal.split(",")
                     value_dict = {}
@@ -1335,22 +1525,28 @@ class LoopReport:
                         value_dict[val[0]] = val[1]
                     status_extension_context_dict["netBasal"] = value_dict
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - netBasal")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - netBasal"
+                    )
                     logger.debug(e)
 
                 try:
                     version_index = temp.index("version")
                     version_temp = temp[version_index:]
                     last_index = version_temp.index(",")
-                    status_extension_context_dict["version"] = version_temp[10:last_index]
+                    status_extension_context_dict["version"] = version_temp[
+                        10:last_index
+                    ]
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - version")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - version"
+                    )
                     logger.debug(e)
 
                 try:
                     unit_index = temp.index("unit")
                     unit_temp = temp[unit_index:]
-                    unit_temp = unit_temp.replace('"', '')
+                    unit_temp = unit_temp.replace('"', "")
                     last_index = unit_temp.index(",")
                     predicted_glucose["unit"] = unit_temp[6:last_index]
                 except Exception as e:
@@ -1360,22 +1556,26 @@ class LoopReport:
                 try:
                     interval_index = temp.index("interval")
                     interval_temp = temp[interval_index:]
-                    interval_temp = interval_temp.replace('"', '')
+                    interval_temp = interval_temp.replace('"', "")
                     last_index = interval_temp.index(",")
                     interval_temp = interval_temp[9:last_index].replace("]", "")
                     predicted_glucose["interval"] = float(interval_temp)
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - interval")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - interval"
+                    )
                     logger.debug(e)
 
                 try:
                     startDate_index = temp.index("startDate")
                     startDate_temp = temp[startDate_index:]
-                    startDate_temp = startDate_temp.replace('"', '')
+                    startDate_temp = startDate_temp.replace('"', "")
                     last_index = startDate_temp.index(",")
                     predicted_glucose["startDate"] = startDate_temp[10:last_index]
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - startDate")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - startDate"
+                    )
                     logger.debug(e)
 
                 status_extension_context_dict["predictedGlucose"] = predicted_glucose
@@ -1383,25 +1583,34 @@ class LoopReport:
                 try:
                     batteryPercentage_index = temp.index("batteryPercentage")
                     batteryPercentage_temp = temp[batteryPercentage_index:]
-                    batteryPercentage_temp = batteryPercentage_temp.replace('"', '')
+                    batteryPercentage_temp = batteryPercentage_temp.replace('"', "")
                     last_index = batteryPercentage_temp.index(",")
-                    status_extension_context_dict["batteryPercentage"] = float(batteryPercentage_temp[18:last_index].strip())
+                    status_extension_context_dict["batteryPercentage"] = float(
+                        batteryPercentage_temp[18:last_index].strip()
+                    )
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - batteryPercentage")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - batteryPercentage"
+                    )
                     logger.debug(e)
 
                 try:
                     lastLoopCompleted_index = temp.index("lastLoopCompleted")
                     lastLoopCompleted_temp = temp[lastLoopCompleted_index:]
-                    lastLoopCompleted_temp = lastLoopCompleted_temp.replace('"', '')
+                    lastLoopCompleted_temp = lastLoopCompleted_temp.replace('"', "")
                     last_index = lastLoopCompleted_temp.index(",")
-                    status_extension_context_dict["lastLoopCompleted"] = lastLoopCompleted_temp[18:last_index]
+                    status_extension_context_dict[
+                        "lastLoopCompleted"
+                    ] = lastLoopCompleted_temp[18:last_index]
                 except Exception as e:
-                    logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER - lastLoopCompleted")
+                    logger.debug(
+                        "handled error STATUS_EXTENSION_DATA_MANAGER - lastLoopCompleted"
+                    )
                     logger.debug(e)
 
-
-                loop_report_dict["status_extension_data_manager"] = status_extension_context_dict
+                loop_report_dict[
+                    "status_extension_data_manager"
+                ] = status_extension_context_dict
             except Exception as e:
                 logger.debug("handled error STATUS_EXTENSION_DATA_MANAGER")
                 logger.debug(e)
@@ -1461,9 +1670,19 @@ class LoopReport:
                     "isUploaded",
                 ]
                 for item in items:
-                    empty, sampleUUID, syncIdentifier, syncVersion, startDate, quantity, foodType, absorptionTime, createdByCurrentApp, externalID, isUploaded = item.split(
-                        ","
-                    )
+                    (
+                        empty,
+                        sampleUUID,
+                        syncIdentifier,
+                        syncVersion,
+                        startDate,
+                        quantity,
+                        foodType,
+                        absorptionTime,
+                        createdByCurrentApp,
+                        externalID,
+                        isUploaded,
+                    ) = item.split(",")
                     if isinstance(quantity, str):
                         quantity = float(quantity.replace("g", ""))
 
@@ -1549,15 +1768,16 @@ class LoopReport:
                     dictionary_complete["receiver"] = temp_dict["receiver"]
 
                 if "providesBLEHeartbeat" in temp_dict:
-                    dictionary_complete["providesBLEHeartbeat"] = temp_dict["providesBLEHeartbeat"]
+                    dictionary_complete["providesBLEHeartbeat"] = temp_dict[
+                        "providesBLEHeartbeat"
+                    ]
 
                 if "latestBackfill" in temp_dict:
                     dictionary_complete["latestBackfill"] = temp_dict["latestBackfill"]
 
                 latestReading_dict = temp_dict["latestReading"]
                 latestReading_dict = latestReading_dict.replace(
-                    "Optional(G4ShareSpy.GlucoseG4(",
-                    "",
+                    "Optional(G4ShareSpy.GlucoseG4(", "",
                 )
                 latestReading_dict = latestReading_dict.replace("))", "")
                 split_list = latestReading_dict.split(",")
@@ -1607,9 +1827,6 @@ class LoopReport:
                 logger.debug("handled error G4_CGM_MANAGER")
                 logger.debug(e)
 
-
-
-
         return loop_report_dict
 
     def add_to_dictionary(self, dictionary, item):
@@ -1655,26 +1872,28 @@ class LoopReport:
         else:
             loop_report_dict["pump_manager_type"] = "unknown"
 
-
     def _parse_item(self, item):
         item_dict = None
         if "startTime" in item:
-            item = item.replace('[', '').replace('"', "").replace(']', "")
+            item = item.replace("[", "").replace('"', "").replace("]", "")
             items_values = item.split(",")
             item_list = []
 
-            if 'startTime' not in items_values[0] and 'value:' not in items_values[0]:
+            if "startTime" not in items_values[0] and "value:" not in items_values[0]:
                 items_values.pop(0)
 
-            if 'value:' in items_values[0]:
-                item_list = [float(items_values[0].replace('value:', '').strip()),
-                             float(items_values[1].strip())]
-                startTime = items_values[2].replace('startTime:', '').strip()
+            if "value:" in items_values[0]:
+                item_list = [
+                    float(items_values[0].replace("value:", "").strip()),
+                    float(items_values[1].strip()),
+                ]
+                startTime = items_values[2].replace("startTime:", "").strip()
             else:
-                startTime = items_values[0].replace('startTime:', '').strip()
-                item_list = [float(items_values[1].replace('value:', '').strip()),
-                             float(items_values[2].strip())]
+                startTime = items_values[0].replace("startTime:", "").strip()
+                item_list = [
+                    float(items_values[1].replace("value:", "").strip()),
+                    float(items_values[2].strip()),
+                ]
 
-            item_dict = {'startTime': startTime,
-                         'value': item_list}
+            item_dict = {"startTime": startTime, "value": item_list}
         return item_dict
